@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { User, Mail, Calendar, Award, BookOpen, TrendingUp } from 'lucide-react';
+import { User, Mail, Calendar, Award, BookOpen, TrendingUp, LogOut } from 'lucide-react';
 
-const ProfileTab: React.FC = () => {
-  const [user] = useState({
-    name: 'Maria Silva',
-    email: 'maria.silva@email.com',
-    joinDate: '15 de Janeiro, 2024',
+interface ProfileTabProps {
+  user: { name: string; email: string } | null;
+  onLogout: () => void;
+}
+
+const ProfileTab: React.FC<ProfileTabProps> = ({ user, onLogout }) => {
+  const [userStats] = useState({
+    joinDate: new Date().toLocaleDateString('pt-BR', { 
+      day: 'numeric', 
+      month: 'long', 
+      year: 'numeric' 
+    }),
     completedModules: 7,
     totalModules: 10,
     totalWatchTime: '3h 45min',
@@ -21,7 +28,9 @@ const ProfileTab: React.FC = () => {
     { id: 6, title: 'Empreendedora', description: 'Assistiu o módulo de vendas', icon: '💰', earned: false }
   ];
 
-  const progress = (user.completedModules / user.totalModules) * 100;
+  const progress = (userStats.completedModules / userStats.totalModules) * 100;
+
+  if (!user) return null;
 
   return (
     <div className="pt-20 pb-8">
@@ -44,7 +53,7 @@ const ProfileTab: React.FC = () => {
             <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
               {user.name.split(' ').map(n => n[0]).join('')}
             </div>
-            <div>
+            <div className="flex-1">
               <h3 className="text-2xl font-bold text-gray-800">{user.name}</h3>
               <p className="text-gray-600 flex items-center mt-1">
                 <Mail className="w-4 h-4 mr-2" />
@@ -52,9 +61,16 @@ const ProfileTab: React.FC = () => {
               </p>
               <p className="text-gray-600 flex items-center mt-1">
                 <Calendar className="w-4 h-4 mr-2" />
-                Membro desde {user.joinDate}
+                Membro desde {userStats.joinDate}
               </p>
             </div>
+            <button
+              onClick={onLogout}
+              className="flex items-center space-x-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors duration-300"
+            >
+              <LogOut className="w-4 h-4" />
+              <span>Sair</span>
+            </button>
           </div>
 
           {/* Progress Statistics */}
@@ -63,7 +79,7 @@ const ProfileTab: React.FC = () => {
               <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-3">
                 <BookOpen className="w-8 h-8 text-white" />
               </div>
-              <div className="text-2xl font-bold text-gray-800">{user.completedModules}/{user.totalModules}</div>
+              <div className="text-2xl font-bold text-gray-800">{userStats.completedModules}/{userStats.totalModules}</div>
               <div className="text-sm text-gray-600">Módulos Completos</div>
             </div>
             <div className="text-center">
@@ -77,14 +93,14 @@ const ProfileTab: React.FC = () => {
               <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-3">
                 <User className="w-8 h-8 text-white" />
               </div>
-              <div className="text-2xl font-bold text-gray-800">{user.totalWatchTime}</div>
+              <div className="text-2xl font-bold text-gray-800">{userStats.totalWatchTime}</div>
               <div className="text-sm text-gray-600">Tempo Assistido</div>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Award className="w-8 h-8 text-white" />
               </div>
-              <div className="text-2xl font-bold text-gray-800">{user.level}</div>
+              <div className="text-2xl font-bold text-gray-800">{userStats.level}</div>
               <div className="text-sm text-gray-600">Nível Atual</div>
             </div>
           </div>
@@ -100,7 +116,7 @@ const ProfileTab: React.FC = () => {
             ></div>
           </div>
           <p className="text-gray-600">
-            Você completou <span className="font-semibold text-pink-600">{user.completedModules} de {user.totalModules} módulos</span>
+            Você completou <span className="font-semibold text-pink-600">{userStats.completedModules} de {userStats.totalModules} módulos</span>
           </p>
         </div>
 
