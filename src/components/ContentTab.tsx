@@ -103,9 +103,9 @@ const ContentTab: React.FC = () => {
       <div className="pt-20 pb-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
+          <h2 className="text-4xl font-bold text-gray-800 mb-4 leading-tight">
             Bem-vinda ao Curso
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-red-600">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-red-600 mt-2">
               Segredinho do Morango Gourmet
             </span>
           </h2>
