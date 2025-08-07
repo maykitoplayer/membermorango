@@ -7,6 +7,7 @@ interface ModuleCardProps {
   duration?: string;
   imageUrl?: string;
   isNew?: boolean;
+  pdfUrl?: string;
   onClick: () => void;
 }
 
@@ -16,6 +17,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({
   duration = "15 min",
   imageUrl,
   isNew = false,
+  pdfUrl,
   onClick
 }) => {
   return (
@@ -64,7 +66,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({
             {duration}
           </div>
           <button className="bg-gradient-to-r from-pink-500 to-red-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-            Assistir
+            Ver Material
           </button>
         </div>
       </div>
